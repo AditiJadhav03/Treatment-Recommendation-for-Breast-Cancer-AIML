@@ -8,7 +8,7 @@ import re
 from imblearn.over_sampling import SMOTE  # <-- NEW IMPORT
 
 # --- 1. CONFIGURATION ---
-PROCESSED_FILE_PATH = "data/processed_features_multiclass_final.csv"
+PROCESSED_FILE_PATH = "data/processed_balanced_bc_clinical_2000.csv"
 MODEL_SAVE_PATH = "models/random_forest_multiclass_final_model.pkl"
 FEATURES_SAVE_PATH = 'models/multiclass_final_feature_names.pkl'
 
@@ -69,12 +69,12 @@ print("\nTraining Multi-Class Random Forest Classifier...")
 
 # The model now trains on the perfectly balanced, resampled data
 model = RandomForestClassifier(
-    n_estimators=100, 
+    n_estimators=800,            # more trees = better generalization
+    max_depth=None,              # allow deeper trees
     random_state=42,
-    # class_weight is technically not strictly necessary after SMOTE, but harmless
-    class_weight='balanced', 
-    max_features='sqrt',
-    min_samples_leaf=5 
+    class_weight="balanced_subsample",  # ensure all classes equally weighted
+    max_features="sqrt",
+    min_samples_leaf=3           # slightly smaller leaves for finer splits
 )
 
 model.fit(X_train_resampled, Y_train_labels_resampled)

@@ -2,9 +2,10 @@ import pandas as pd
 import numpy as np
 import os
 
-# --- 1. CONFIGURATION ---
-RAW_FILE_PATH = "data/bc_treatment_dataset.csv"
-PROCESSED_FILE_PATH = "data/processed_features_multiclass_final.csv"
+# 1. FILE PATHS ---
+RAW_FILE_PATH = "data/balanced_bc_clinical_2000.csv"
+PROCESSED_FILE_PATH = "data/processed_balanced_bc_clinical_2000.csv"
+
 
 # Ensure the data directory exists
 os.makedirs('data', exist_ok=True)
@@ -72,7 +73,12 @@ nominal_cols = [
     'pathologic_m', 'tumor_necrosis', 'anatomic_subdivision', TARGET_COL
 ]
 
-df = pd.get_dummies(df, columns=nominal_cols, drop_first=True, prefix_sep='__')
+df = pd.get_dummies(df, columns=nominal_cols, drop_first=False, prefix_sep='__')
+
+# Debug check: confirm all three classes exist
+treatment_cols = [c for c in df.columns if c.startswith('treatment__')]
+print("\nTreatment columns created:", treatment_cols)
+
 
 # --- 6. FINAL SAVE ---
 df.to_csv(PROCESSED_FILE_PATH, index=False, encoding='latin1') 
