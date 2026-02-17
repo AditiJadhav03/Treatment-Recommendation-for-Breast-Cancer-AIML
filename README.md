@@ -72,5 +72,11 @@ The project outputs:
 3. **Model performance metrics** (accuracy, precision, recall) to evaluate predictions.
 4. **Processed datasets** and feature selections for reproducibility.
 
+## Live Application
+You can access the deployed Streamlit application here:
+https://treatment-recommendation-for-breast-cancer.streamlit.app/
+
+
+
 
 
